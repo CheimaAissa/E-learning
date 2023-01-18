@@ -1,0 +1,5 @@
+package com.elearning.User;
+
+public enum Role {
+
+}

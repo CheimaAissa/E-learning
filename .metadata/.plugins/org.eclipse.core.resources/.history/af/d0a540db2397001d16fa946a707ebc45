@@ -1,0 +1,183 @@
+package com.elearning.Course;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.elearning.Teacher.Course;
+import com.elearning.Teacher.Teacher;
+
+import lombok.Data;
+
+
+@Data
+class Teacher{
+	private Long id_teacher;
+    private String username;
+    private String password;
+    private String firstnameTeacher;
+    private String lastnameteacher;
+    private String emailTeacher;
+    private String descTeacher;
+    private String detailTeacher;
+    private Set<Course> course;
+    private LocalDate date;
+    private String imgurl;
+}
+@FeignClient(name="COURSE")
+interface TeacherService{
+	@GetMapping("/course/{id}")
+	public Optional<Teacher> findById(@Param("id_teacher")Long id_teacher);
+}
+
+@Entity
+@Table(name = "course")
+public class Course implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
+	@Id
+    @Column(name = "course_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id_Course;
+
+    @Column(name = "nameCourse", nullable = false, unique = true)
+    private String nameCourse;
+
+    @Column(name = "description")
+    private String descriptionCourse;
+
+    @Column(name = "detail")
+    private String detailCourse;
+
+    @Column(name = "difficulty")
+    private String difficultyCourse;
+
+    @Column(name = "url")
+    private String urlCourse;
+
+    private String imgurl;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+    
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "course")
+    private Enrollment enroll;
+
+	public Course(String nameCourse, String descriptionCourse, String detailCourse, String difficultyCourse,
+			String urlCourse, String imgurl, Teacher teacher) {
+		super();
+		this.nameCourse = nameCourse;
+		this.descriptionCourse = descriptionCourse;
+		this.detailCourse = detailCourse;
+		this.difficultyCourse = difficultyCourse;
+		this.urlCourse = urlCourse;
+		this.imgurl = imgurl;
+		this.teacher = teacher;
+	}
+	public Course () {}
+	
+	public Course (Course course) {
+		super();
+		this.nameCourse = course.nameCourse;
+		this.descriptionCourse = course.descriptionCourse;
+		this.detailCourse = course.detailCourse;
+		this.difficultyCourse = course.difficultyCourse;
+		this.urlCourse = course.urlCourse;
+		this.imgurl = course.imgurl;
+		this.teacher = course.teacher;
+	}
+
+	public Long getId_Course() {
+		return id_Course;
+	}
+
+	public void setId_Course(Long id_Course) {
+		this.id_Course = id_Course;
+	}
+
+	public String getNameCourse() {
+		return nameCourse;
+	}
+
+	public void setNameCourse(String nameCourse) {
+		this.nameCourse = nameCourse;
+	}
+
+	public String getDescriptionCourse() {
+		return descriptionCourse;
+	}
+
+	public void setDescriptionCourse(String descriptionCourse) {
+		this.descriptionCourse = descriptionCourse;
+	}
+
+	public String getDetailCourse() {
+		return detailCourse;
+	}
+
+	public void setDetailCourse(String detailCourse) {
+		this.detailCourse = detailCourse;
+	}
+
+	public String getDifficultyCourse() {
+		return difficultyCourse;
+	}
+
+	public void setDifficultyCourse(String difficultyCourse) {
+		this.difficultyCourse = difficultyCourse;
+	}
+
+	public String getUrlCourse() {
+		return urlCourse;
+	}
+
+	public void setUrlCourse(String urlCourse) {
+		this.urlCourse = urlCourse;
+	}
+
+	public String getImgurl() {
+		return imgurl;
+	}
+
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
+	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+    
+    
+
+}

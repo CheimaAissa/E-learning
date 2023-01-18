@@ -1,0 +1,162 @@
+package com.elearning.User;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+
+@Data
+class Enrollment{
+	private Long id_enrollment;
+	private LocalDate enrollment_date;
+	private User user;
+}
+
+@Entity
+@Table(name = "T_user")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class User {
+	
+	@Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private long id;
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "firstname")
+    private String firstname;
+    @Column(name = "lastname")
+    private String lastname;
+    @Column(name = "email")
+    private String email;
+    
+    private String detail;
+    @Column(name = "image_url")
+    private String imgurl;
+    @Column(name = "registration_date")
+    private LocalDate date;
+    @Enumerated(EnumType.STRING)
+	private Role roles;
+   
+    
+    
+    @OneToOne(fetch = FetchType.EAGER,mappedBy = "user")
+    private Enrollment enroll;
+    
+	public User(String username, String password, String firstname, String lastname, String email, String imgurl,
+			LocalDate date,Role roles) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.email = email;
+		this.imgurl = imgurl;
+		this.date = date;
+		this.roles = roles;
+	}
+	
+	public User() {}
+	
+	 public User(User user) {
+		super();
+		this.username = user.username;
+		this.password = user.password;
+		this.firstname = user.firstname;
+		this.lastname = user.lastname;
+		this.email = user.email;
+		this.imgurl = user.imgurl;
+		this.date = user.date;
+		this.roles = user.roles;
+	}
+	 
+
+	public Role getRole() {
+		return roles;
+	}
+
+
+
+	public void setRole(Role role) {
+		this.roles = role;
+	}
+
+
+
+	public User(String detail) {
+	        this.detail = detail;
+   }
+	 
+	 
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public String getFirstname() {
+		return firstname;
+	}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	public String getImgurl() {
+		return imgurl;
+	}
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
+	}
+	public LocalDate getDate() {
+		return date;
+	}
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+}

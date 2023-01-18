@@ -1,0 +1,187 @@
+package com.elearning.Teacher;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
+
+@Entity
+@Table(name = "teacher")
+public class Teacher implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	@Id
+    @Column(name = "teacher_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_teacher;
+	@Column(name = "username", nullable = false, unique = true)
+    private String username;
+    @Column(name = "password")
+    private String password;
+    @Column(name = "firstName")
+    private String firstnameTeacher;
+    @Column(name = "lastName")
+    private String lastnameteacher;
+    @Column(name = "email")
+    private String emailTeacher;
+    @Column(name = "description")
+    private String descTeacher;
+    @Column(name = "detail")
+    private String detailTeacher;
+    public String getDetailTeacher() {
+		return detailTeacher;
+	}
+
+
+
+	public void setDetailTeacher(String detailTeacher) {
+		this.detailTeacher = detailTeacher;
+	}
+
+	@Column(name = "registration_date")
+    private LocalDate date;
+    private String imgurl;
+    
+    @OneToMany(cascade = CascadeType.ALL , mappedBy="teacher")
+    private Set<Course> course;
+    
+    
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+	
+
+
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+
+
+	public Teacher(String username, String password, String firstnameTeacher, String lastnameteacher,
+			String emailTeacher, String descTeacher, LocalDate date, String imgurl) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.firstnameTeacher = firstnameTeacher;
+		this.lastnameteacher = lastnameteacher;
+		this.emailTeacher = emailTeacher;
+		this.descTeacher = descTeacher;
+		this.date = date;
+		this.imgurl = imgurl;
+	}
+
+
+
+	public Teacher () {}
+	
+	
+	
+	public Teacher (Teacher teacher) {
+		this.id_teacher = teacher.id_teacher;
+		this.firstnameTeacher = teacher.firstnameTeacher;
+		this.lastnameteacher = teacher.lastnameteacher;
+		this.emailTeacher = teacher.emailTeacher;
+		this.descTeacher = teacher.descTeacher;
+		this.imgurl = teacher.imgurl;
+		this.course = teacher.course;
+	}
+	
+	
+	public String getDescTeacher() {
+		return descTeacher;
+	}
+	public void setDescTeacher(String descTeacher) {
+		this.descTeacher = descTeacher;
+	}
+
+	public Long getId_teacher() {
+		return id_teacher;
+	}
+
+	public void setId_teacher(Long id_teacher) {
+		this.id_teacher = id_teacher;
+	}
+
+	public String getFirstnameTeacher() {
+		return firstnameTeacher;
+	}
+
+	public void setFirstnameTeacher(String firstnameTeacher) {
+		this.firstnameTeacher = firstnameTeacher;
+	}
+
+	public String getLastnameteacher() {
+		return lastnameteacher;
+	}
+
+	public void setLastnameteacher(String lastnameteacher) {
+		this.lastnameteacher = lastnameteacher;
+	}
+
+	public String getEmailTeacher() {
+		return emailTeacher;
+	}
+
+	public void setEmailTeacher(String emailTeacher) {
+		this.emailTeacher = emailTeacher;
+	}
+
+	public String getImgurl() {
+		return imgurl;
+	}
+
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
+	}
+
+	public Set<Course> getCourse() {
+		return course;
+	}
+
+	public void setCourse(Set<Course> course) {
+		this.course = course;
+	}
+	
+	
+
+}

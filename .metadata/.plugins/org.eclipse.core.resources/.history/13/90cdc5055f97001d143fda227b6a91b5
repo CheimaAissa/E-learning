@@ -1,0 +1,5 @@
+package com.eschool.Gateway;
+
+public class APIController {
+
+}

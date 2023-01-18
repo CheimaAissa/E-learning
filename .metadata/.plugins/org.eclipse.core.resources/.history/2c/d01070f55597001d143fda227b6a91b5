@@ -1,0 +1,64 @@
+package com.elearning.Enrollement;
+
+@Entity
+@Table(name = "enrollment")
+public class Enrollment {
+	@Id
+    @Column(name = "enrollment_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_enrollment;
+
+    @Column(name = "date")
+    private LocalDate enrollment_date;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+	public Enrollment(LocalDate enrollment_date, User user, Course course) {
+		super();
+		this.enrollment_date = enrollment_date;
+		this.user = user;
+		this.course = course;
+	}
+	public Enrollment() {}
+
+	public Long getId_enrollment() {
+		return id_enrollment;
+	}
+
+	public void setId_enrollment(Long id_enrollment) {
+		this.id_enrollment = id_enrollment;
+	}
+
+	public LocalDate getEnrollment_date() {
+		return enrollment_date;
+	}
+
+	public void setEnrollment_date(LocalDate enrollment_date) {
+		this.enrollment_date = enrollment_date;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+    
+
+}
